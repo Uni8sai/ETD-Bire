@@ -57,6 +57,10 @@ class LinkThread(QThread):
         profile_info.bssid = bss.bssid
         profile_info.akm.append(bss.akm[-1])
         profile_info.key = wifi_password
+        print("SSID:", bss.ssid)
+        print("BSSID:", bss.bssid)
+        print("AKM:", bss.akm)
+        print("Using password:", self.key)
         interface.remove_all_network_profiles()
         tmp_profile = interface.add_network_profile(profile_info)
         self.notify_Label.emit("Begin to connect the AP:%s(%s)..." % (bss.ssid, bss.bssid))
