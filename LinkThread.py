@@ -47,12 +47,11 @@ class LinkThread(QThread):
 
     def connect_encrypt(self, interface, bss, wifi_password):
         iface_list = PyWiFi().interfaces()
-        print("Detected interfaces:", [iface.name() for iface in iface_list])
-        print("Scan list:", [(ap.ssid, ap.bssid, ap.akm) for ap in self.scan_list])
         print(f"Connecting to: {bss.ssid} ({bss.bssid}), Security: {bss.akm}")
         self.notify_Label.emit('Disconnecting from the current network...')
         interface.disconnect()
         time.sleep(2)
+        print("Interface status before connect:", interface.status())
         profile_info = Profile()
         profile_info.ssid = bss.ssid
         profile_info.bssid = bss.bssid
