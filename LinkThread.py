@@ -30,6 +30,7 @@ class LinkThread(QThread):
     def connect_open(self, interface, bss):
         iface_list = PyWiFi().interfaces()
         print("Detected interfaces:", [iface.name() for iface in iface_list])
+        print("Scan list:", [(ap.ssid, ap.bssid, ap.akm) for ap in scan_list])
         self.notify_Label.emit('Disconnecting from the current network...')
         interface.disconnect()
         time.sleep(2)
