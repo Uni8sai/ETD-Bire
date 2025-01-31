@@ -88,4 +88,5 @@ class LinkThread(QThread):
             conf.route.resync()
         else:
             self.notify_Label.emit("wifi:%s(%s) connect failed！" % (bss.ssid, bss.bssid))
+            time.sleep(2)
             self.notify_Label.emit("%s disconnected..." % self.iface_name)
