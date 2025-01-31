@@ -67,6 +67,10 @@ class LinkThread(QThread):
         bss = self.scan_list[self.ap_number]
         interface = self.iface_choose(self.iface_name)
         self.notify_Label.emit('Currently selected the WLAN card:%s,' % self.iface_name)
+        if self.iface is None:
+            print("Error: Interface not found!")
+        else:
+            print(f"Selected interface: {self.iface.name()}")
         if bss.akm:
             self.connect_encrypt(interface, bss, self.key)
         else:
