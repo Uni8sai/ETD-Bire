@@ -64,6 +64,7 @@ class LinkThread(QThread):
         interface.remove_all_network_profiles()
         tmp_profile = interface.add_network_profile(profile_info)
         self.notify_Label.emit("Begin to connect the AP:%s(%s)..." % (bss.ssid, bss.bssid))
+        print(interface.connect(tmp_profile))
         interface.connect(tmp_profile)
 
     def run(self):
