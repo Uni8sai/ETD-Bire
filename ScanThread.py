@@ -19,7 +19,7 @@ class ScanThread(QThread):
 
         self.notify_Label.emit('Currently selected the wireless network card:' + self.iface_name + ',Scanning...')
         scan_iface.scan()
-        time.sleep(3)
+        time.sleep(5)
         bsses = scan_iface.scan_results()
         return sorted(bsses, key=lambda x: x.ssid)
 
