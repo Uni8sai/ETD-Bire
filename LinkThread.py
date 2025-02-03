@@ -65,6 +65,7 @@ class LinkThread(QThread):
         tmp_profile = interface.add_network_profile(profile_info)
         self.notify_Label.emit("Begin to connect the AP:%s(%s)..." % (bss.ssid, bss.bssid))
         interface.connect(tmp_profile)
+        time.sleep(30)
 
     def run(self):
 
@@ -82,7 +83,6 @@ class LinkThread(QThread):
         for value in range(0, 101):
             time.sleep(0.04)
             self.notify_Progress.emit(value)
-        time.sleep(60)
         print("Interface status after connect:", interface.status())
         if interface.status() == const.IFACE_CONNECTED:
             self.notify_Label.emit('Connection Complete,IP address is being assigned...')
