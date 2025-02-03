@@ -9,7 +9,7 @@ from Detect_Dialog import Detect_Dialog
 from DetectThread import DetectThread
 from datetime import datetime
 
-AKM = {0: 'NONE', 1: 'WPA', 2: 'WPA-PSK', 3: 'WPA2', 4: 'WPA2-PSK', 5: 'UNKNOWN'}
+AKM = {1: 'OPEN', 2: 'SHARED', 3: 'WPA', 4: 'WPA-PSK', 5: 'WPA-NONE', 6: 'WPA2', 7: 'WPA2-PSK', 8: 'WPA3', 9: 'WPA3-SAE', 10: 'OWE', 11: 'WPA3-ENT'}
 Channel = {2412: '1', 2417: '2', 2422: '3', 2427: '4', 2432: '5', 2437: '6', 2442: '7', 2447: '8', 2452: '9',
            2457: '10', 2462: '11', 2467: '12', 2472: '13'}
 
