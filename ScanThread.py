@@ -17,7 +17,7 @@ class ScanThread(QThread):
 
     def scan_ap(self, scan_iface):
 
-        while self.iface.status() == const.IFACE_SCANNING:
+        while scan_iface.status() == const.IFACE_SCANNING:
             print("Scanning... waiting")
             time.sleep(1)
         self.notify_Label.emit('Currently selected the wireless network card:' + self.iface_name + ',Scanning...')
