@@ -1,6 +1,6 @@
 from PyQt5.QtCore import *
 from scapy.all import *
-from pywifi import PyWiFi
+from pywifi import PyWiFi, const
 
 
 class ScanThread(QThread):
