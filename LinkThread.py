@@ -82,9 +82,8 @@ class LinkThread(QThread):
         for value in range(0, 101):
             time.sleep(0.04)
             self.notify_Progress.emit(value)
-        time.sleep(20)
+        time.sleep(10)
         print("Interface status after connect:", interface.status())
-        time.sleep(5)
         if interface.status() == const.IFACE_CONNECTED:
             self.notify_Label.emit('Connection Complete,IP address is being assigned...')
             subprocess.call(ip_release, shell=False)
