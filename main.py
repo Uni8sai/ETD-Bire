@@ -190,8 +190,8 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
                    u"                                                     Contact:oycillessen@foxmail.com"
         QtWidgets.QMessageBox.information(self, u"About", use_help)
 
-    def __update_status(self, status_text):
-            self.statusLabel.setText(f"Interface: {interface.name()} Status: {status_text}")
+    def __update_status(self, interface_text, status_text):
+            self.statusLabel.setText(f"Interface: {interface_text} Status: {status_text}")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
