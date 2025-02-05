@@ -66,7 +66,7 @@ class LinkThread(QThread):
         self.notify_Label.emit("Begin to connect the AP:%s(%s)..." % (bss.ssid, bss.bssid))
         interface.connect(tmp_profile)
 
-    def wait_for_connection(interface, timeout=15):
+    def wait_for_connection(self,interface, timeout=15):
         for i in range(timeout):
             status = interface.status()
             print(f"Waiting for connection... Status: {status} ({i+1}/{timeout}s)")
