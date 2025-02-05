@@ -58,6 +58,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
             self.monitor_thread.wait()
 
         self.monitor_thread = MonitorThread(iface_name)
+        self.monitor_thread.notify_Progress.connect(self.__update_status)
         self.monitor_thread.start()
         
     def scan_button_click(self):
@@ -189,7 +190,8 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
                    u"                                                     Contact:oycillessen@foxmail.com"
         QtWidgets.QMessageBox.information(self, u"About", use_help)
 
-
+    def __update_status(self, status_text):
+            self.statusLabel.setText(f"Interface: {interface.name()} Status: {status_text}")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
