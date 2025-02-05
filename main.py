@@ -46,6 +46,21 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         self.statusLabel = QtWidgets.QLabel("Status: Unknown", self)
         self.statusLabel.setGeometry(20, 400, 300, 30)  # 位置調整
 
+        # 最初のインターフェースを取得して監視を開始
+        if items:
+            default_iface = items[0]  # 最初のNICを監視
+            self.start_monitoring(default_iface)
+
+    def start_monitoring(self, iface_name):
+        """指定したインターフェースの監視スレッドを開始する"""
+        if self.monitor_thread:
+            self.monitor_thread.stop()
+            self.monitor_thread.wait()
+
+        self.monitor_thread = MonitorThread(iface_name)
+        self.monitor_thread.notify_Status.connect(self.__update_status)
+        self.monitor_thread.start()
+        
     def scan_button_click(self):
 
         set_network = QtWidgets.QInputDialog()
@@ -59,15 +74,6 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
             self.stop_action.triggered.connect(self.__on_stop_scan)
             self.scan_thread.start()
             
-            # 既存の監視スレッドがあれば停止
-            if self.monitor_thread:
-                self.monitor_thread.stop()
-                self.monitor_thread.wait()
-
-            # 新しい監視スレッドを起動
-            self.monitor_thread = MonitorThread(iface_name)
-            self.monitor_thread.notify_Status.connect(self.__update_status)
-            self.monitor_thread.start()
 
     def scan_list_update(self, scan_list):
 
