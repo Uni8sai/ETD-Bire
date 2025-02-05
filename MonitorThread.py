@@ -4,7 +4,7 @@ from pywifi import PyWiFi, const
 
 class MonitorThread(QThread):
     notify_Progress = pyqtSignal(str)
-
+    
     def __init__(self, face_name, parent=None):
         super(MonitorThread, self).__init__(parent)
         self.iface_name = face_name
@@ -16,7 +16,7 @@ class MonitorThread(QThread):
         while self.running:
             status = interface.status()
             status_text = self.get_status_text(status)
-            self.notify_Progress.emit("%s Status: %s" % (interface.name,status_text))
+            self.notify_Label.emit("%s Status: %s" % (interface.name,status_text))
             time.sleep(2)  # 2秒ごとに状態を確認
 
     def stop(self):
