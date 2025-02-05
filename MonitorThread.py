@@ -16,7 +16,7 @@ class MonitorThread(QThread):
             status = interface.status()
             status_text = self.get_status_text(status)
             print(f"Interface: {interface.name()} Status: {status_text}")
-            self.notify_Progress.emit(status_text)
+            self.notify_Progress.emit(f"Interface: {interface.name()} Status: {status_text}")
             time.sleep(2)  # 2秒ごとに状態を確認
 
     def stop(self):
