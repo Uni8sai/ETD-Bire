@@ -58,7 +58,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
             self.monitor_thread.wait()
 
         self.monitor_thread = MonitorThread(iface_name)
-        self.monitor_thread.notify_Status.connect(self.__update_status)
+        self.monitor_thread.notify_Progress.connect(self.__update_status)
         self.monitor_thread.start()
         
     def scan_button_click(self):
