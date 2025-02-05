@@ -5,12 +5,14 @@ from pywifi import PyWiFi, const
 class MonitorThread(QThread):
     notify_Progress = pyqtSignal(str)
 
-    def __init__(self, interface, parent=None):
+    def __init__(self, face_name, parent=None):
         super(MonitorThread, self).__init__(parent)
-        self.interface = interface
+        self.iface_name = face_name
         self.running = True  # スレッドを制御するフラグ
 
     def run(self):
+        
+        interface = self.iface_choose(self.iface_name)
         while self.running:
             status = self.interface.status()
             status_text = self.get_status_text(status)
@@ -20,6 +22,13 @@ class MonitorThread(QThread):
     def stop(self):
         self.running = False  # スレッドを停止
 
+    @staticmethod
+    def iface_choose(face_name):
+        iface_list = PyWiFi().interfaces()
+        for interface in iface_list:
+            if interface.name() == face_name:
+                return interface
+            
     @staticmethod
     def get_status_text(status):
         status_dict = {
