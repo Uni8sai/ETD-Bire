@@ -44,7 +44,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         self.progressBar.setValue(0)
         
         self.statusLabel = QtWidgets.QLabel("Status: Unknown", self)
-        self.statusLabel.setGeometry(510, 10, 131, 30)  # 位置調整
+        self.statusLabel.setGeometry(510, 10, 200, 30)  # 位置調整
 
         # 最初のインターフェースを取得して監視を開始
         if items:
