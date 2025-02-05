@@ -3,6 +3,7 @@ from UI import Ui_MainWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
 from ScanThread import ScanThread
 from LinkThread import LinkThread
+from MonitorThread import MonitorThread
 from pywifi import PyWiFi
 from Link_Dialog import Link_Dialog
 from Detect_Dialog import Detect_Dialog
@@ -24,6 +25,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         super(Mywindow, self).__init__()
         self.setupUi(self)
         self.scan_list = list()
+        self.monitor_thread = None  # 監視スレッドのインスタンス
         self.ScanButton.clicked.connect(self.scan_button_click)
         self.LinkButton.clicked.connect(self.link_button_click)
         self.DetectButton.clicked.connect(self.detect_button_click)
@@ -40,6 +42,9 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
 
         self.progressBar.setRange(0, 100)
         self.progressBar.setValue(0)
+        
+        self.statusLabel = QtWidgets.QLabel("Status: Unknown", self)
+        self.statusLabel.setGeometry(20, 400, 300, 30)  # 位置調整
 
     def scan_button_click(self):
 
@@ -53,6 +58,16 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
             self.scan_thread.notify_Label.connect(self.__on_Label)
             self.stop_action.triggered.connect(self.__on_stop_scan)
             self.scan_thread.start()
+            
+            # 既存の監視スレッドがあれば停止
+            if self.monitor_thread:
+                self.monitor_thread.stop()
+                self.monitor_thread.wait()
+
+            # 新しい監視スレッドを起動
+            self.monitor_thread = MonitorThread(iface_name)
+            self.monitor_thread.notify_Status.connect(self.__update_status)
+            self.monitor_thread.start()
 
     def scan_list_update(self, scan_list):
 
@@ -169,6 +184,8 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
                    u"                                                     Contact:oycillessen@foxmail.com"
         QtWidgets.QMessageBox.information(self, u"About", use_help)
 
+    def __update_status(self, status_text):
+            self.statusLabel.setText(f"Status: {status_text}")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
