@@ -66,22 +66,36 @@ class LinkThread(QThread):
         self.notify_Label.emit("Begin to connect the AP:%s(%s)..." % (bss.ssid, bss.bssid))
         interface.connect(tmp_profile)
 
+    def wait_for_connection(interface, timeout=15):
+        for i in range(timeout):
+            status = interface.status()
+            print(f"Waiting for connection... Status: {status} ({i+1}/{timeout}s)")
+            if status == const.IFACE_CONNECTED:
+                return True
+            time.sleep(1)
+        return False
+        
     def run(self):
 
         bss = self.scan_list[self.ap_number]
         interface = self.iface_choose(self.iface_name)
         self.notify_Label.emit('Currently selected the WLAN card:%s,' % self.iface_name)
-        if interface is None:
-            print("Error: Interface not found!")
-        else:
-            print(f"Selected interface: {interface.name()}")
         if bss.akm:
             self.connect_encrypt(interface, bss, self.key)
         else:
             self.connect_open(interface, bss)
+            
         for value in range(0, 101):
             time.sleep(0.04)
             self.notify_Progress.emit(value)
+        
+        self.notify_Label.emit("Connecting...")
+        if self.wait_for_connection(interface):
+            self.notify_Label.emit("Connection successful!")
+        else:
+            self.notify_Label.emit("Connection failed after timeout.")
+            return  # 接続に失敗した場合は処理を中止
+        
         print("Interface status after connect:", interface.status())
         time.sleep(10)
         if interface.status() == const.IFACE_CONNECTED:
