@@ -3,7 +3,7 @@ from scapy.all import *
 from pywifi import PyWiFi, const
 
 class MonitorThread(QThread):
-    notify_Progress = pyqtSignal(str,str)
+    notify_Progress = pyqtSignal(str)
     def __init__(self, face_name, parent=None):
         super(MonitorThread, self).__init__(parent)
         self.iface_name = face_name
