@@ -16,7 +16,7 @@ class MonitorThread(QThread):
         while self.running:
             status = interface.status()
             status_text = self.get_status_text(status)
-            self.notify_Status.emit(f"Wi-Fi Status: {status_text}")
+            self.notify_Progress.emit(f"Wi-Fi Status: {status_text}")
             time.sleep(2)  # 2秒ごとに状態を確認
 
     def stop(self):
