@@ -50,9 +50,9 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         if items:
             default_iface = items[0]  # 最初のNICを監視
             self.start_monitoring(default_iface)
-        # if items:
-        #     default_iface = items[0]  # 最初のNICをリセット
-        #     self.reset_wifi_interface(default_iface)
+        if items:
+            default_iface = items[0]  # 最初のNICをリセット
+            self.reset_wifi_interface(default_iface)
 
     def start_monitoring(self, iface_name):
         #指定したインターフェースの監視スレッドを開始する
@@ -67,10 +67,9 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
     def reset_wifi_interface(self, iface_name):
     # Wi-Fi インターフェースをリセットしてBUSY状態を解消する """
         for interface in iface_list:
-            if interface.name() == iface_name:
-                
+            if interface.name() == iface_name:                
                 interface.disconnect()  # 接続を解除
-                time.sleep(2)  # 少し待機
+
     
     def scan_button_click(self):
 
