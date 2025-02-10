@@ -64,10 +64,13 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         self.monitor_thread.notify_Progress.connect(self.__update_status)
         self.monitor_thread.start()
         
-    def reset_wifi_interface(self, iface):
+    def reset_wifi_interface(self, iface_name):
     # Wi-Fi インターフェースをリセットしてBUSY状態を解消する """
-        iface.disconnect()  # 接続を解除
-        time.sleep(2)  # 少し待機
+        for interface in iface_list:
+            if interface.name() == iface_name:
+                
+                interface.disconnect()  # 接続を解除
+                time.sleep(2)  # 少し待機
     
     def scan_button_click(self):
 
