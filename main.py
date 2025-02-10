@@ -78,7 +78,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
                                              False)
         if ok:
             self.reset_wifi_interface(iface_name)
-            time.sleep(2)
+            
             self.scan_thread = ScanThread(iface_name)
             self.scan_thread.notify_Progress.connect(self.__on_Progress)
             self.scan_thread.listSignal.connect(self.scan_list_update)
