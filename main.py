@@ -69,6 +69,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         self.reset_thread = ResetThread(iface_name)
         self.reset_thread.finished.connect(lambda: print("Wi-Fi Reset Done"))
         self.reset_thread.start()
+        self.reset_thread.stop()
     
     def scan_button_click(self):
 
