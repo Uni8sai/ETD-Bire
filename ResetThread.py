@@ -1,5 +1,6 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 from pywifi import PyWiFi, const
+from scapy.all import *
 
 class ResetThread(QThread):
     finished = pyqtSignal()
