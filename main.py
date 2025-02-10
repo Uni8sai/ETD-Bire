@@ -50,9 +50,9 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         if items:
             default_iface = items[0]  # 最初のNICを監視
             self.start_monitoring(default_iface)
-        # if items:
-        #     default_iface = items[0]  # 最初のNICをリセット
-        #     self.reset_wifi_interface(default_iface)
+        if items:
+            default_iface = items[0]  # 最初のNICをリセット
+            self.reset_wifi_interface(default_iface)
 
     def start_monitoring(self, iface_name):
         #指定したインターフェースの監視スレッドを開始する
