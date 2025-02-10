@@ -69,7 +69,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         for interface in iface_list:
             if interface.name() == iface_name:                
                 interface.disconnect()  # 接続を解除
-
+                return
     
     def scan_button_click(self):
 
