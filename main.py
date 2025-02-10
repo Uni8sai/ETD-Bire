@@ -51,9 +51,9 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         if items:
             default_iface = items[0]  # 最初のNICを監視
             self.start_monitoring(default_iface)
-        if items:
-            default_iface = items[0]  # 最初のNICをリセット
-            self.reset_wifi_interface(default_iface)
+        # if items:
+        #     default_iface = items[0]  # 最初のNICをリセット
+        #     self.reset_wifi_interface(default_iface)
 
     def start_monitoring(self, iface_name):
         #指定したインターフェースの監視スレッドを開始する
@@ -69,7 +69,7 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         self.reset_thread = ResetThread(iface_name)
         self.reset_thread.finished.connect(lambda: print("Wi-Fi Reset Done"))
         self.reset_thread.start()
-        self.reset_thread.stop()
+        
     
     def scan_button_click(self):
 
@@ -77,6 +77,8 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         iface_name, ok = set_network.getItem(self, 'Nic Selector', 'Select a wireless network interface card:', items, 0,
                                              False)
         if ok:
+            self.reset_wifi_interface(iface_name)
+            time.sleep(2)
             self.scan_thread = ScanThread(iface_name)
             self.scan_thread.notify_Progress.connect(self.__on_Progress)
             self.scan_thread.listSignal.connect(self.scan_list_update)
