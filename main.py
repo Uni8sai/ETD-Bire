@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from ScanThread import ScanThread
 from LinkThread import LinkThread
 from MonitorThread import MonitorThread
+from ResetThread import ResetThread
 from pywifi import PyWiFi
 from Link_Dialog import Link_Dialog
 from Detect_Dialog import Detect_Dialog
@@ -50,9 +51,9 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         if items:
             default_iface = items[0]  # 最初のNICを監視
             self.start_monitoring(default_iface)
-        # if items:
-        #     default_iface = items[0]  # 最初のNICをリセット
-        #     self.reset_wifi_interface(default_iface)
+        if items:
+            default_iface = items[0]  # 最初のNICをリセット
+            self.reset_wifi_interface(default_iface)
 
     def start_monitoring(self, iface_name):
         #指定したインターフェースの監視スレッドを開始する
@@ -65,12 +66,9 @@ class Mywindow (QtWidgets.QWidget, Ui_MainWindow):
         self.monitor_thread.start()
         
     def reset_wifi_interface(self, iface_name):
-    # Wi-Fi インターフェースをリセットしてBUSY状態を解消する """
-        for interface in iface_list:
-            if interface.name() == iface_name:                
-                interface.disconnect()  # 接続を解除
-                print("disconnect")
-                return
+        self.reset_thread = ResetThread(iface_name)
+        self.reset_thread.finished.connect(lambda: print("Wi-Fi Reset Done"))
+        self.reset_thread.start()
     
     def scan_button_click(self):
 
