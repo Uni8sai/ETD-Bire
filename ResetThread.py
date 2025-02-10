@@ -12,10 +12,7 @@ class ResetThread(QThread):
         interface = self.iface_choose(self.iface_name)
         interface.disconnect()  # 切断
         self.finished.emit()  # 完了通知
-
-    def stop(self):
-        self.running = False  # スレッドを停止
-        
+        time.sleep(2)
     @staticmethod
     def iface_choose(face_name):
         iface_list = PyWiFi().interfaces()
